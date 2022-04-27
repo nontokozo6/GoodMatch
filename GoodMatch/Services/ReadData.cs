@@ -50,7 +50,9 @@ namespace GoodMatch.Services
         public static void logResults(List<string> goodMatchResults)
         {
             List<string> displayedList = new List<string>();
-            using (StreamWriter writer = new StreamWriter("Resources/Output.txt"))
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string filePath = System.IO.Path.Combine(currentDirectory, "Resources", "Output.txt");
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
                 //adds results into a list 
                 foreach (var goodMatch in goodMatchResults)
