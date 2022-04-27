@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\Resources\GoodMatchData.csv" />
+    <None Include="Resources\GoodMatchData.csv" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

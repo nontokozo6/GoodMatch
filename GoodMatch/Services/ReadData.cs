@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace GoodMatch.Services
 {
@@ -15,7 +16,12 @@ namespace GoodMatch.Services
             List<string> listM = new List<string>();
 
 
-            using (var reader = new StreamReader("Resources/GoodMatchData.csv"))
+            // using (var reader = new StreamReader("Resources/GoodMatchData.csv"))
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string filePath = System.IO.Path.Combine(currentDirectory, "Resources", "GoodMatchData.csv");
+            //string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"\Resources\GoodMatchData.csv");
+            using (var reader = new StreamReader(filePath))
+           // D:/ xxx.csv
             {
                 while (!reader.EndOfStream)
                 {
