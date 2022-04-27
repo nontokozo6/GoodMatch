@@ -1,6 +1,7 @@
 ﻿using GoodMatch.Services;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace GoodMatch
 {
@@ -11,7 +12,8 @@ namespace GoodMatch
             var genderSortedData = ReadData.ReadAndSortData();
             var removeDuplicates = CheckDuplicates.CheckForDuplicates(genderSortedData);
             var goodMatchResults = Match.DoMatching(removeDuplicates);
-            ReadData.logResults(goodMatchResults);
+                goodMatchResults = Ordering.OrderGoodMatchResults(goodMatchResults);
+            ReadData.logResults(goodMatchResults.Select(x=>x.Result).ToList());
             
             Console.ReadLine();
         }     

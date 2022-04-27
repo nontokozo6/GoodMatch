@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoodMatch.Models;
 
 namespace GoodMatch.Services
 {
@@ -8,26 +9,34 @@ namespace GoodMatch.Services
     {
         const string keyWord = "matches";
 
-        public static List<string> DoMatching(IEnumerable<List<string>> readyList)
+        public static List<MatchResult> DoMatching(IEnumerable<List<string>> readyList)
         {
             var females = new List<string>(readyList.ElementAt(0));
             var males = new List<string>(readyList.ElementAt(1));
             int matchResult = 0;
-            List<string> matchResults = new List<string>();
-           
-            foreach(var name in females)
+            List<MatchResult> matchResults = new List<MatchResult>();
+
+
+            foreach (var name in females)
             {
                 for (int maleNamePosition = 0; maleNamePosition < males.Count; maleNamePosition++)
                 {
                     matchResult = (CountMatches(name, males[maleNamePosition]));
                     string result = $"{name} matches {males[maleNamePosition]} {matchResult}% ";
 
-                    if(matchResult >= 80)
+                    if (matchResult >= 80)
                     {
                         result += "good match";
                     }
 
-                    matchResults.Add(result);
+                    matchResults.Add(new MatchResult { Result = result, ResultPercentange = matchResult });
+
+
+                    //var r = matchResults.OrderBy(s => s.Split(' ')[2]).ThenBy(s => int.Parse(s.Split(' ')[1]));
+
+                    // matchResults = r.ToList();
+                    //Console.WriteLine(matchResults);
+
                 }
             }
 
@@ -42,7 +51,7 @@ namespace GoodMatch.Services
 
             for (int letterPosition = 0; letterPosition < combinedString.Length; letterPosition++)
             {
-                if (combinedString[letterPosition]==' ')
+                if (combinedString[letterPosition] == ' ')
                 {
                     continue;
                 }
@@ -56,7 +65,7 @@ namespace GoodMatch.Services
 
         public static int MakeTwoDigits(List<int> matches)
         {
-            List<int> Addedmatches = new List<int> ();
+            List<int> Addedmatches = new List<int>();
 
             for (int numberPosition = 0; numberPosition < matches.Count;)
             {
@@ -65,7 +74,7 @@ namespace GoodMatch.Services
 
                 matches.RemoveAt(numberPosition);
 
-                if (matches.Count ==0)
+                if (matches.Count == 0)
                 {
                     break;
                 }
@@ -89,7 +98,7 @@ namespace GoodMatch.Services
                     Addedmatches.RemoveAt(numberPosition);
                     Addedmatches.RemoveAt(Addedmatches.Count - (numberPosition + 1));
 
-                    if (Addedmatches.Count == 1 )
+                    if (Addedmatches.Count == 1)
                     {
                         tempAddedmatches.Add(Addedmatches[0]);
                         Addedmatches.RemoveAt(numberPosition);
@@ -104,9 +113,9 @@ namespace GoodMatch.Services
             foreach (var number in Addedmatches)
             {
                 twoDigitnumber += number.ToString();
-            } 
+            }
 
             return Convert.ToInt32(twoDigitnumber);
-        } 
+        }
     }
 }
